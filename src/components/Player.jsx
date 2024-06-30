@@ -88,11 +88,9 @@ export const Player = ({
       <div className="w-full grid gap-8 h-fit">
         <div className="grid gap-2">
           {activeSong?.id ? (
-            <span className="text-white text-[32px] font-bold">
-              {activeSong.name}
-            </span>
+            <span className="text-[32px] font-bold">{activeSong.name}</span>
           ) : (
-            <span className="text-white text-[32px] font-bold">Song title</span>
+            <span className="text-[32px] font-bold">Song title</span>
           )}
           {activeSong?.id ? (
             <span className="text-white/60 text-base">{activeSong.artist}</span>
@@ -121,18 +119,15 @@ export const Player = ({
             className="appearance-none w-full overflow-hidden bg-white/20 rounded-2xl"
           />
         ) : (
-          <Skeleton className="h-[6px] bg-white/[0.08] rounded-2xl" />
+          <Skeleton className="h-px] bg-white/[0.08] rounded-2xl" />
         )}
 
         <div className="flex w-full justify-between">
-          <span className="text-white">{formattedTime}</span>
-          <span className="text-white">{formattedDuration}</span>
+          <span>{formattedTime}</span>
+          <span>{formattedDuration}</span>
         </div>
         <div className="flex justify-between">
-          <img
-            src="/kebab.svg"
-            className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
-          />
+          <img src="/kebab.svg" className="w-10 h-10 xl:w-12 xl:h-12" />
           <div className="flex gap-4 xl:gap-8">
             <img
               src="/previous.svg"

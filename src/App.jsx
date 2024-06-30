@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux'
 import { useGetSongsQuery } from './redux/services/samespaceApi'
-import { Song } from './components/Song'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Error } from './components/Error'
 import { Player } from './components/Player'
 import { Sidebar } from './components/Sidebar'
 import { useState } from 'react'
+import { Nav } from './components/Nav'
+import { Search } from './components/Search'
+import { List } from './components/List'
 
 function App() {
   const { activeSong, isPlaying, currentIndex, bgColor, currentSongs } =
@@ -16,7 +18,16 @@ function App() {
   const [toggleActiveTab, setToggleActiveTab] = useState(0)
   const [search, setSearch] = useState('')
 
-  if (isFetching) return <Skeleton />
+  if (isFetching)
+    return (
+      <div className="h-screen grid place-items-center place-content-center space-y-3">
+        <Skeleton className="h-[125px] w-[250px] rounded-xl bg-white/[0.08]" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[250px] bg-white/[0.08]" />
+          <Skeleton className="h-4 w-[200px] bg-white/[0.08]" />
+        </div>
+      </div>
+    )
   if (error) return <Error />
 
   return (
@@ -32,77 +43,12 @@ function App() {
         setSearch={setSearch}
       />
       <div className="hidden xl:w-[430px] xl:grid gap-6 py-1 h-fit">
-        <nav className="flex gap-10">
-          <span
-            className={`cursor-pointer text-2xl font-bold ${
-              !toggleActiveTab ? 'text-white' : 'text-white/50'
-            }`}
-            onClick={() => setToggleActiveTab(0)}
-          >
-            For You
-          </span>
-          <span
-            className={`cursor-pointer text-2xl font-bold ${
-              toggleActiveTab ? 'text-white' : 'text-white/50'
-            }`}
-            onClick={() => setToggleActiveTab(1)}
-          >
-            Top Tracks
-          </span>
-        </nav>
-        <div className="w-[400px] relative place-self-center ">
-          <input
-            className="w-full h-12 pl-4 pr-12 bg-white/[0.08] rounded-lg text-white focus:outline-none"
-            type="search"
-            placeholder="Search Song, Artist"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <img
-            src="/search.svg"
-            className="absolute top-2 right-2"
-            alt="search"
-          />
-        </div>
-
-        {!toggleActiveTab &&
-          songs
-            .filter((song) => {
-              return search.toLowerCase() === ''
-                ? song
-                : song.name.toLowerCase().includes(search) ||
-                    song.artist.toLowerCase().includes(search)
-            })
-            .map((song, index) => (
-              <Song
-                key={song.id}
-                index={index}
-                song={song}
-                isPlaying={isPlaying}
-                activeSong={activeSong}
-                songs={songs}
-                bgColor={bgColor}
-              />
-            ))}
-        {toggleActiveTab &&
-          songs
-            ?.filter((song) => song.top_track)
-            .filter((song) => {
-              return search.toLowerCase() === ''
-                ? song
-                : song.name.toLowerCase().includes(search) ||
-                    song.artist.toLowerCase().includes(search)
-            })
-            .map((song, index) => (
-              <Song
-                key={song.id}
-                index={index}
-                song={song}
-                isPlaying={isPlaying}
-                activeSong={activeSong}
-                songs={songs}
-                bgColor={bgColor}
-              />
-            ))}
+        <Nav
+          toggleActiveTab={toggleActiveTab}
+          setToggleActiveTab={setToggleActiveTab}
+        />
+        <Search setSearch={setSearch} />
+        <List toggleActiveTab={toggleActiveTab} songs={songs} search={search} />
       </div>
       <Player
         activeSong={activeSong}

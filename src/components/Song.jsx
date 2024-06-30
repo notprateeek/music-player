@@ -37,7 +37,7 @@ export const Song = ({ index, song, songs, bgColor, activeSong }) => {
           alt="song cover"
         />
         <div className="grid">
-          <span className="text-lg text-white">{song.name}</span>
+          <span className="text-lg ">{song.name}</span>
           <span className="text-lg text-white/60">{song.artist}</span>
         </div>
       </div>
