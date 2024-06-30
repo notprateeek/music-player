@@ -1,6 +1,12 @@
 import { useRef, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { nextSong, playPause, prevSong } from '../redux/features/playerSlice'
+import {
+  nextSong,
+  playPause,
+  prevSong,
+  setBgColor,
+} from '../redux/features/playerSlice'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const Player = ({
   activeSong,
@@ -33,6 +39,7 @@ export const Player = ({
   const handleNextSong = () => {
     if (currentIndex < currentSongs.length - 1) {
       dispatch(nextSong((currentIndex + 1) % currentSongs.length))
+      dispatch(setBgColor(currentSongs[currentIndex + 1]?.accent))
     }
   }
 
@@ -69,7 +76,7 @@ export const Player = ({
   )}:${`0${Math.floor(currentSongDuration % 60)}`.slice(-2)}`
 
   return (
-    <div className="w-full h-[inherit]">
+    <div className="w-full max-w-[480px] place-self-center xl:mx-auto">
       <audio
         src={activeSong?.url}
         ref={ref}
@@ -97,11 +104,11 @@ export const Player = ({
         {activeSong?.id ? (
           <img
             src={`${coverBaseUrl}${activeSong.cover}`}
-            className="rounded-lg"
+            className="rounded-lg aspect-square"
             alt="song cover"
           />
         ) : (
-          <div className="w-full aspect-square bg-white/[0.08]"></div>
+          <Skeleton className="w-full aspect-square bg-white/[0.08]" />
         )}
 
         {activeSong?.id ? (
@@ -114,7 +121,7 @@ export const Player = ({
             className="appearance-none w-full overflow-hidden bg-white/20 rounded-2xl"
           />
         ) : (
-          <div className="h-[6px] bg-white/[0.08] rounded-2xl"></div>
+          <Skeleton className="h-[6px] bg-white/[0.08] rounded-2xl" />
         )}
 
         <div className="flex w-full justify-between">
@@ -123,50 +130,50 @@ export const Player = ({
         </div>
         <div className="flex justify-between">
           <img
-            src="/public/menu.svg"
-            className="cursor-pointer w-10 h-10 md:w-12 md:h-12"
+            src="/kebab.svg"
+            className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
           />
-          <div className="flex gap-4 md:gap-8">
+          <div className="flex gap-4 xl:gap-8">
             <img
-              src="/public/previous.svg"
-              className="cursor-pointer w-10 h-10 md:w-12 md:h-12"
+              src="/previous.svg"
+              className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
               onClick={activeSong?.id ? handlePrevSong : null}
             />
             {!isPlaying && (
               <img
-                src="/public/play.svg"
-                className="cursor-pointer w-10 h-10 md:w-12 md:h-12"
+                src="/play.svg"
+                className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
                 onClick={activeSong?.id ? handlePlayPause : null}
               />
             )}
             {isPlaying && (
               <img
-                src="/public/pause.svg"
-                className="cursor-pointer w-10 h-10 md:w-12 md:h-12"
+                src="/pause.svg"
+                className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
                 onClick={activeSong?.id ? handlePlayPause : null}
               />
             )}
             <img
-              src="/public/next.svg"
-              className="cursor-pointer w-10 h-10 md:w-12 md:h-12"
+              src="/next.svg"
+              className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
               onClick={activeSong?.id ? handleNextSong : null}
             />
           </div>
           {!mute && (
             <img
-              src="/public/volume.svg"
+              src="/volume.svg"
               width={48}
               height={48}
-              className="cursor-pointer w-10 h-10 md:w-12 md:h-12"
+              className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
               onClick={activeSong?.id ? handleMute : null}
             />
           )}
           {mute && (
             <img
-              src="/public/mute.svg"
+              src="/mute.svg"
               width={48}
               height={48}
-              className="cursor-pointer w-10 h-10 md:w-12 md:h-12"
+              className="cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
               onClick={activeSong?.id ? handleMute : null}
             />
           )}

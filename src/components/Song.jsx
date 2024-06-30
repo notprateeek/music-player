@@ -6,7 +6,7 @@ import {
 } from '../redux/features/playerSlice'
 import { useState } from 'react'
 
-export const Song = ({ index, song, songs, bgColor }) => {
+export const Song = ({ index, song, songs, bgColor, activeSong }) => {
   const coverBaseUrl = 'https://cms.samespace.com/assets/'
 
   const [songDuration, setSongDuration] = useState()
@@ -25,7 +25,9 @@ export const Song = ({ index, song, songs, bgColor }) => {
 
   return (
     <div
-      className="cursor-pointer h-[80px] flex p-4 justify-between items-center"
+      className={`cursor-pointer rounded-lg h-[80px] flex p-4 justify-between items-center ${
+        activeSong?.id === song.id ? 'bg-white/[0.08]' : ''
+      }`}
       onClick={handlePlayClick}
     >
       <div className="flex gap-4">

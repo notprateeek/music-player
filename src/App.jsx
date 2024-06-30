@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { useGetSongsQuery } from './redux/services/samespaceApi'
 import { Song } from './components/Song'
-import { Loader } from './components/Loader'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Error } from './components/Error'
 import { Player } from './components/Player'
 import { Sidebar } from './components/Sidebar'
@@ -16,16 +16,22 @@ function App() {
   const [toggleActiveTab, setToggleActiveTab] = useState(0)
   const [search, setSearch] = useState('')
 
-  if (isFetching) return <Loader />
+  if (isFetching) return <Skeleton />
   if (error) return <Error />
 
   return (
     <main
-      className="p-8 h-screen grid gap-12 md:flex"
+      className="p-8 h-screen flex flex-col gap-12 xl:flex-row 2xl:gap-40"
       style={{ background: `linear-gradient(to right, ${bgColor}, #000)` }}
     >
-      <Sidebar />
-      <div className="hidden md:w-[432px] md:grid gap-6 py-2 h-fit">
+      <Sidebar
+        toggleActiveTab={toggleActiveTab}
+        setToggleActiveTab={setToggleActiveTab}
+        songs={songs}
+        search={search}
+        setSearch={setSearch}
+      />
+      <div className="hidden xl:w-[430px] xl:grid gap-6 py-1 h-fit">
         <nav className="flex gap-10">
           <span
             className={`cursor-pointer text-2xl font-bold ${
@@ -52,7 +58,7 @@ function App() {
             onChange={(e) => setSearch(e.target.value)}
           />
           <img
-            src="/public/search.svg"
+            src="/search.svg"
             className="absolute top-2 right-2"
             alt="search"
           />
@@ -98,7 +104,6 @@ function App() {
               />
             ))}
       </div>
-
       <Player
         activeSong={activeSong}
         isPlaying={isPlaying}
