@@ -9,7 +9,7 @@ import { Nav } from './components/Nav'
 import { Search } from './components/Search'
 import { List } from './components/List'
 
-function App() {
+const App = () => {
   const { activeSong, isPlaying, currentIndex, bgColor, currentSongs } =
     useSelector((state) => state.player)
   const { data, isFetching, error } = useGetSongsQuery()
