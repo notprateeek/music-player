@@ -33,7 +33,7 @@ export const Song = ({ index, song, songs, bgColor, activeSong }) => {
       <div className="flex gap-4">
         <img
           src={`${coverBaseUrl}${song.cover}`}
-          className="w-12 h-12 rounded-full"
+          className="w-12 h-12 rounded-full bg-white/[0.08]"
           alt="song cover"
         />
         <div className="grid">
