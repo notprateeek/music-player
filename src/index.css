@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  color: #fff;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  height: 6px;
+  width: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: -250px 0 0 250px #fff;
+}
